@@ -32,7 +32,7 @@ def apiScraper():
         return "error"
 
 
-@app.route("/summary/create/<ratio>",methods=["POST"])
+@app.route("/api/create/<ratio>",methods=["POST"])
 def summaryCreate(ratio):
     if request.method=="POST":
         data1=request.get_json()
