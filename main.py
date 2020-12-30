@@ -10,7 +10,8 @@ app = Flask(__name__)
 @app.route("/api/keywords",methods=["POST"])
 def apiKeywords():
     if request.method=="POST":
-        text=request.form["text"]
+        data1=request.get_json()
+        text=data1["text"]
         get=KeyExtractor(text)
         return jsonify(get.extractorKEYS())
     else:
@@ -20,8 +21,9 @@ def apiKeywords():
 @app.route("/api/scraper",methods=["POST"])
 def apiScraper():
     if request.method=="POST":
-        getURL=request.form['word']
-        getType=int(request.form['type'])
+        data1=request.get_json()
+        getURL=data1['word']
+        getType=int(data1['type'])
         data=googleAPIinteract(getURL,getType)
         extract=data.getJsonData()  
         getdata=data.findPage(extract['items'][0]['link'])
@@ -33,7 +35,8 @@ def apiScraper():
 @app.route("/summary/create/<ratio>",methods=["POST"])
 def summaryCreate(ratio):
     if request.method=="POST":
-        text=request.form["text"]
+        data1=request.get_json()
+        text=data1["text"]
         text=summarize(text,ratio=ratio)
         return text
     else:
