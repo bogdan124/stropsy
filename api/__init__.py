@@ -1,3 +1,4 @@
+ 
 import string
 from nltk.corpus import stopwords
 import nltk
@@ -89,5 +90,4 @@ class googleAPIinteract():
         self.data = requests.get(self.url)
         dataDict=self.data.json()
         return dataDict
-
 
