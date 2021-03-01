@@ -1,0 +1,84 @@
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 4px solid #9f9dff;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 100%;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+span.tooltiptext {
+    top: 100%;
+    left: 0%;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.add-text-desc {
+    width: 345px !important;
+    text-align: left !important;
+}
+
+stropsy {
+    border-bottom: 4px solid #95ff99 !important;
+}
+
+stropsy:hover {
+    border-bottom: 4px solid #10cc17 !important;
+    cursor: pointer !important;
+}
+
+stropsy-popup {
+    width: 350px !important;
+    height: 350px !important;
+    position: relative;
+    top: 10px !important;
+    z-index: 1000000000000000000000000000000 !important;
+    right: 0px !important;
+    box-shadow: 0 12px 48px rgba(109, 117, 141, 0.2) !important;
+    background: white !important;
+    border: 0px !important;
+}
+
+.title_stropsy {
+    margin-bottom: 31px !important;
+    font-size: 28px !important;
+    font-weight: 800 !important;
+}
+
+.content-stropsy {
+    position: absolute;
+    width: 350px !important;
+    height: 800px !important;
+    top: 20px !important;
+    left: -136px !important;
+    z-index: 2147483647 !important;
+    right: 0px !important;
+    box-shadow: rgba(109, 117, 141, 0.2) 0px 12px 48px !important;
+    background: white !important;
+    border-width: 0px !important;
+    border-style: initial !important;
+    border-color: initial !important;
+    border-image: initial !important;
+    padding: 14px !important;
+}
+
+
+}
+.stropsy-desc-word,
+.stropsy-desc-word {
+    font-family: sans-serif !important;
+    font-size: 16px !important;
+}

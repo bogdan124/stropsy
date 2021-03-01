@@ -1,0 +1,24 @@
+{
+    "name": "Stropsy",
+    "version": "0.1",
+    "manifest_version": 2,
+    "description": "Build an Extension!",
+    "permissions": ["activeTab","declarativeContent","tabs","storage","clipboardWrite","http://*/*","https://*/*","file://*/*"],
+    "background": {
+        "scripts": ["jquery.js","background.js","main.js"],
+        "persistent": true
+
+      },
+      "browser_action": {
+        "default_popup": "popup.html"
+      },
+      "content_scripts":[
+        {
+          "matches":["<all_urls>","https://134.122.6.78/*","http://*/*", "https://*/*"],
+          "js":["jquery.js","mark.min.js","content.js"],
+          "css":["style.css"],
+          "run_at": "document_end"
+        }
+      ],
+      "content_security_policy": "script-src 'self'; object-src 'self'"
+  }
