@@ -18,6 +18,7 @@ from functools import wraps
 app = Flask(__name__)
 import nltk
 nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
 
 app.config['SECRET_KEY'] = Env().APP_SECRET_KEY
 
