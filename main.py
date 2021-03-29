@@ -28,7 +28,7 @@ def tokenRequire(test):
                 text=data1["text"]
                 token=data1["token"]
         except (KeyError, TypeError, ValueError):
-                raise JsonError(description='Invalid value.')
+                return jsonify({"error":"parameter missing"})
         if decode_auth_token(token)[1]==200:
                return test(*args, **kwargs)
         else:
@@ -43,7 +43,7 @@ def apiKeywords():
                 text=data1["text"]
                 token=data1["token"]
         except (KeyError, TypeError, ValueError):
-                raise JsonError(description='Invalid value.')
+                return jsonify({"error":"parameter missing"})
         if decode_auth_token(token)[1]==200:
                 ##print(decode_auth_token(token))
                 get=KeyExtractor(text)
@@ -183,7 +183,7 @@ def extract_words_small_text():
                         text=data1["text"]
                         token=data1["token"]
                 except (KeyError, TypeError, ValueError):
-                        raise JsonError(description='Invalid value.')
+                        return jsonify({"error":"parameter missing"})
                 ##print(token,decode_auth_token(token)[1])
                 if decode_auth_token(token)[1]==200:  
                         getData=RequestSearchCertainPartOfText(text)
