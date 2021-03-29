@@ -24,8 +24,11 @@ def tokenRequire(test):
     @wraps(test)
     def wrap(*args, **kwargs):
         data1=request.get_json()
-        text=data1["text"]
-        token=data1["token"]
+        try:
+                text=data1["text"]
+                token=data1["token"]
+        except (KeyError, TypeError, ValueError):
+                raise JsonError(description='Invalid value.')
         if decode_auth_token(token)[1]==200:
                return test(*args, **kwargs)
         else:
@@ -36,8 +39,11 @@ def tokenRequire(test):
 ##@tokenRequire
 def apiKeywords():
         data1=request.get_json()
-        text=data1["text"]
-        token=data1["token"]
+        try:
+                text=data1["text"]
+                token=data1["token"]
+        except (KeyError, TypeError, ValueError):
+                raise JsonError(description='Invalid value.')
         if decode_auth_token(token)[1]==200:
                 ##print(decode_auth_token(token))
                 get=KeyExtractor(text)
@@ -48,9 +54,13 @@ def apiKeywords():
 @app.route("/api/scraper",methods=["POST"])
 def apiScraper():
         data1=request.get_json()
-        getURL=data1['word']
-        getType=int(data1['type'])
-        token=data1["token"]
+        try:
+                getURL=data1['word']
+                getType=int(data1['type'])
+                token=data1["token"]
+        except (KeyError, TypeError, ValueError):
+                raise JsonError(description='Invalid value.')
+        
         ##print(token,decode_auth_token(token)[1])
         if decode_auth_token(token)[1]==200:
                 data=googleAPIinteract(getURL,getType)
@@ -169,8 +179,11 @@ def extract_words_small_text():
         ##print(getData)
         if request.method=="POST":
                 data1 = request.get_json()
-                text = data1["text"]
-                token=data1["token"]
+                try:
+                        text=data1["text"]
+                        token=data1["token"]
+                except (KeyError, TypeError, ValueError):
+                        raise JsonError(description='Invalid value.')
                 ##print(token,decode_auth_token(token)[1])
                 if decode_auth_token(token)[1]==200:  
                         getData=RequestSearchCertainPartOfText(text)
