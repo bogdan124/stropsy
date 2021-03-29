@@ -11,7 +11,13 @@ import pke
 from goose3 import Goose
 import requests
 import json
-
+import requests
+import json
+import nltk
+# import spacy
+import spacy
+from nltk.chunk import conlltags2tree, tree2conlltags
+from pprint import pprint
 
 
 class KeyExtractor():
@@ -91,3 +97,112 @@ class googleAPIinteract():
         dataDict=self.data.json()
         return dataDict
 
+"""
+class RequestSearchCertainPartOfText:
+
+    def __init__(self,word):
+        self.words=word;
+    
+    def getDataForWord(self):
+        stringRequest="https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch="+self.words+"&format=json"
+        r=requests.get(url=stringRequest)
+        print(r)
+"""
+
+
+class RequestSearchCertainPartOfText:
+
+    def __init__(self,word):
+        self.words=word;
+    
+    def getDataForWord(self):    
+        stringRequest="https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch="+self.words+"&format=json"
+        r=requests.get(url=str(stringRequest))
+        r=json.loads(r.text)
+        print(r['query']['search'][0]['snippet'])
+    
+    def getWikipediaPage(self):
+        pass
+
+    def getWikipediaFirstProp(self): 
+        pass
+
+    def extractSmallParagrphData(self):
+        text=self.words
+        # load english language model
+        nlp = spacy.load('en_core_web_sm',disable=['ner','textcat'])
+        ##text = "Biochemistry or biological chemistry, is the study of chemical processes within and relating to living organisms.[1] A sub-discipline of both chemistry and biology, biochemistry may be divided into three fields: structural biology, enzymology and metabolism. "
+        listToPermit=['PROPN','NOUN','ADJ']##adj trebuie sa aibe o prop si un PROPN sau NOUN pe langa el 
+        # create spacy 
+        def preprocess(sent):
+            sent = nltk.word_tokenize(sent)
+            sent = nltk.pos_tag(sent)
+            return sent
+
+        doc = preprocess(text)
+        ##NN,NNS,NNP,NN
+        ##as putea sublinia automat alea de sus sau partile mari din test si daca nu le gasesc pe alea subliniez alte parti
+
+
+        pattern2=r"""
+                ##   Chink: }<VB.?|IN|DT|VBN>{ 
+                    Chunk: {<JJ>*<NN.>*<NN.>}    
+                    Chink: }<VB.?|IN|DT|VBN|TO>{ 
+                    Chunk: {<JJ>*<NN>*<NN>} 
+                    Chink: }<VB.?|IN|DT|VBN|TO>{ 
+                    Chunk: {<NN>*<NN>} 
+                    Chink: }<VB.?|IN|DT|VBN|TO>{ 
+                    Chunk: {<NNP>*<NN>*<NN>}
+                    Chink: }<VB.?|IN|DT|VBN|TO>{ 
+                    Chunk: {<JJ>*<NNP>*<NN>}   
+                """
+        cp = nltk.RegexpParser(pattern2)
+        tree = cp.parse(doc)
+
+        def extract_chunk(tree, chunk='NP'):
+            """
+            Extract chunk as text from a parsed tree.
+            """
+            result = []
+            for subtree in tree.subtrees():
+                if subtree.label() == chunk:
+                    words = subtree.leaves()
+                    result.append(' '.join([w for w,t in words]))
+                    
+            return result
+
+        returnData=[]
+        spitout=["[","]","%","-","+"]
+        for i in extract_chunk(tree,"Chunk"):
+            if i not in spitout:
+                returnData.append(i)
+        return returnData
+
+
+
+
+class RequestServicesFromMultipleAPIcalls():
+
+    def __init__(self,search,api_Id):
+        self.search=search
+        self.api_Id=api_Id
+
+    def callApiListYotube(self):
+        response = requests.get("https://www.googleapis.com/youtube/v3/search?q="+self.search+"&key=AIzaSyC9ZVMsS7RX4Temw5ORKoaaHQqw5BGb9RE")
+        getData=response.json()
+        return getData
+
+    def callApiVideoYoutube(self):
+        response = requests.get("https://www.googleapis.com/youtube/v3/videos?id=" + text + "&key=AIzaSyC9ZVMsS7RX4Temw5ORKoaaHQqw5BGb9RE&part=snippet,contentDetails,statistics")
+        getData=response.json()
+        return getData
+
+
+
+    def getDataAPIcall(self):
+        if self.api_Id==1:
+            return self.callApiListYotube()
+        elif self.api_Id==2:
+            return self.callApiVideoYoutube()
+        else:
+            return None
