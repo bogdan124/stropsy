@@ -16,6 +16,8 @@ from functools import wraps
 ##pip install people_also_ask 
 ##https://medium.com/thecyphy/generating-abstractive-summaries-using-googles-pegasus-model-18eef8ae985b
 app = Flask(__name__)
+import nltk
+nltk.download('punkt')
 
 app.config['SECRET_KEY'] = Env().APP_SECRET_KEY
 
