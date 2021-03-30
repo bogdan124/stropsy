@@ -17,8 +17,8 @@ from functools import wraps
 ##https://medium.com/thecyphy/generating-abstractive-summaries-using-googles-pegasus-model-18eef8ae985b
 app = Flask(__name__)
 import nltk
-nltk.download('punkt')
-nltk.download('averaged_perceptron_tagger')
+##nltk.download('punkt')
+##nltk.download('averaged_perceptron_tagger')
 
 app.config['SECRET_KEY'] = Env().APP_SECRET_KEY
 
