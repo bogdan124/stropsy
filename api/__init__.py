@@ -2,7 +2,7 @@
 import string
 from nltk.corpus import stopwords
 import nltk
-nltk.download('stopwords')
+##nltk.download('stopwords')
 import spacy
 ##!pip install git+https://github.com/boudinfl/pke.git
 ##python3 -m spacy download en_core_web_sm
